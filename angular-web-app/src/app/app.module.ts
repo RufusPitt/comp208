@@ -21,7 +21,10 @@ import { HomeComponent } from './home/home.component';
   declarations: [
     AppComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    MyLeaderboardsComponent,
+    LinkWithSteamComponent,
+    LoginWithSteamComponent
   ],
   imports: [
     BrowserModule,

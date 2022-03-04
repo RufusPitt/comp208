@@ -1,2 +1,17 @@
 <p>my-leaderboards works!</p>
 <p>Implement display of personal leaderboards and stats here:</p>
+
+<table class="table" id='tab'>
+    <thead>
+        <tr>
+            <th scope="col">steamID</th>
+            <th scope="col">username</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users" >
+            <td>{{ user.steamID }}</td>
+            <td>{{ user.username }}</td>
+        </tr>
+    </tbody>
+</table> 
