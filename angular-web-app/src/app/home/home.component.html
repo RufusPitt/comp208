@@ -1,0 +1,19 @@
+<p>home works!</p>
+<p>Some global leaderboard tables here:</p>
+
+<table class="table" id='tab'>
+    <thead>
+        <tr>
+            <th scope="col">steamID</th>
+            <th scope="col">username</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{ user.steamID }}</td>
+            <td>{{ user.username }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<!--<body>{{ users }}></body> -->
