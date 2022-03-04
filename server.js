@@ -15,6 +15,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors())
 
+//get routes:
+const usersRoute = require('./routes/users')
+const userRoute = require('./routes/user')
+
+//use routes:
+app.use('/api/users', usersRoute)
+app.use('/api/user', userRoute)
 
 // Server port
 var HTTP_PORT = 8000 
@@ -28,30 +35,29 @@ app.get("/", (req, res, next) => {
 });
 
 // Insert here other API endpoints
-
 //get a list of all users
 //e.g: http://localhost:8000/api/users
-app.get("/api/users", (req, res, next) => {
-    var sql = "select * from user"
-    var params = []
-    db.all(sql, params, (err, rows) => {
-        if (err) {
-          res.status(400).json({"error":err.message});
-          return;
-        }
-        res.json({
-            //"message":"success",
-            //"data":rows
-            rows
-        })
-      });
-});
+    /*app.get("/api/users", (req, res, next) => {
+        var sql = "select * from user"
+        var params = []
+        db.all(sql, params, (err, rows) => {
+            if (err) {
+            res.status(400).json({"error":err.message});
+            return;
+            }
+            res.json({
+                //"message":"success",
+                //"data":rows
+                rows
+            })
+        });
+    });*/
 
-//get a specific user by id
-//e.g: http://localhost:8000/api/user/1
-app.get("/api/user/:id", (req, res, next) => {
-    var sql = "select * from user where id = ?"
-    var params = [req.params.id]
+//get a specific user by steamID
+//e.g: http://localhost:8000/api/user/001
+/*app.get("/api/user/:steamID", (req, res, next) => {
+    var sql = "select * from user where steamID = ?"
+    var params = [req.params.steamID]
     db.get(sql, params, (err, row) => {
         if (err) {
           res.status(400).json({"error":err.message});
@@ -64,26 +70,26 @@ app.get("/api/user/:id", (req, res, next) => {
       });
 });
 
-//create new user
-app.post("/api/user/", (req, res, next) => {
+//create new user by inserting data in json format
+app.post("/api/user/", (req, res, next) => { //restrict only to post commands
     var errors=[]
-    if (!req.body.password){
-        errors.push("No password specified");
+    if (!req.body.steamID){
+        errors.push("No steamID specified");
     }
-    if (!req.body.email){
-        errors.push("No email specified");
+    if (!req.body.username){
+        errors.push("No username specified");
     }
     if (errors.length){
         res.status(400).json({"error":errors.join(",")});
         return;
     }
     var data = {
-        name: req.body.name,
-        email: req.body.email,
-        password : md5(req.body.password)
+        steamID: req.body.steamID,
+        username: req.body.username,
+        //password : md5(req.body.password)
     }
-    var sql ='INSERT INTO user (name, email, password) VALUES (?,?,?)'
-    var params =[data.name, data.email, data.password]
+    var sql ='INSERT INTO user (steamID, username) VALUES (?,?)'
+    var params =[data.steamID, data.username]
     db.run(sql, params, function (err, result) {
         if (err){
             res.status(400).json({"error": err.message})
@@ -92,10 +98,10 @@ app.post("/api/user/", (req, res, next) => {
         res.json({
             "message": "success",
             "data": data,
-            "id" : this.lastID
+            //"id" : this.lastID
         })
     });
-})
+})*/
 
 
 // Default response for any other request

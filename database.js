@@ -31,6 +31,48 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 
         db.run(`
             CREATE TABLE matches (
+                matchID text PRIMARY KEY,
+                map text,
+                winner text,
+                datetime text
+            )`,
+        (err) => {
+            if (err) {
+                // Table already created
+            }else{
+                // Table just created, creating some rows
+                //datetime format "YYYY-MM-DD HH:MM:SS.SSS"
+                var insertMatches = 'INSERT INTO matches (matchID, map, winner, datetime) VALUES (?,?,?,?)'
+                db.run(insertMatches, ["M01", "map1", "Blue team", "2016-01-01 10:20:05.123"])
+                db.run(insertMatches, ["M02", "map2", "Red team", "2016-03-01 10:20:05.123"])
+                db.run(insertMatches, ["M03", "map1", "Blue team", "2016-04-01 10:20:05.123"])
+                db.run(insertMatches, ["M04", "map2", "Red team", "2016-05-01 10:20:05.123"])
+            }
+        });
+
+        /*db.run(`
+            CREATE TABLE matchsummary (
+                matchID text SECONDARY KEY,
+                steamID text SECONDARY KEY,
+                totalkills INTEGER,
+                totaldeaths INTEGER,
+                score INTEGER,
+                team text
+            )`,
+        (err) => {
+            if (err) {
+                // Table already created
+            }else{
+                // Table just created, creating some rows
+                //datetime format "YYYY-MM-DD HH:MM:SS.SSS"
+                var insertMatches = 'INSERT INTO matches (matchID, steamID, totalkills, totaldeaths, score, team) VALUES (?,?,?,?,?,?)'
+                db.run(insertMatches, ["M01", "map1", "Blue team", "2016-01-01 10:20:05.123"])
+            }
+        });*/
+
+        /*db.run(`
+            CREATE TABLE matches (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 winner text
             )`,
@@ -43,7 +85,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 db.run(insertMatches, ["Blue team"])
                 db.run(insertMatches, ["Red team"])
             }
-        });  
+        });*/
     }
 });
 
