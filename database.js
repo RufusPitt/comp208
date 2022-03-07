@@ -14,18 +14,23 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         db.run(`
             CREATE TABLE user (
                 steamID text PRIMARY KEY,
-                username text
+                username text,
+                rank INTEGER,
+                total_kills INTEGER,
+                total_deaths INTEGER,
+                total_won INTEGER,
+                total_lost INTEGER
             )`,
         (err) => {
             if (err) {
                 // Table already created
             }else{
                 // Table just created, creating some rows
-                var insertUser = 'INSERT INTO user (steamID, username) VALUES (?,?)'
+                var insertUser = 'INSERT INTO user (steamID, username, rank, total_kills, total_deaths, total_won, total_lost) VALUES (?,?,?,?,?,?,?)'
                 //db.run(insert, ["admin","admin@example.com",md5("admin123456")])
                 //db.run(insert, ["user","user@example.com",md5("user123456")])
-                db.run(insertUser, ["000", "username1"])
-                db.run(insertUser, ["001", "username2"])
+                db.run(insertUser, ["000", "username1", 99, 12, 3, 15, 4])
+                db.run(insertUser, ["001", "username2", 80, 5, 6, 2, 1])
             }
         });
 
